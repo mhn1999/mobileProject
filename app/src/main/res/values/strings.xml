@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MobileProject</string>
+    <string name="title_home">Home</string>
+    <string name="title_cells">Cells</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="permission_required">Camera access is required to display the camera preview.</string>
+    <string name="ok">OK</string>
+    <string name="permission_granted">Permission is granted. You can use the camera now.</string>
+    <string name="connect">Connect</string>
+</resources>
