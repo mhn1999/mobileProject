@@ -10,4 +10,5 @@
     <string name="app_title">Network App</string>
     <string name="advanced_settings_Button">Advanced Settings</string>
     <string name="how_to_use_Button">How To Use</string>
+    <string name="speed_meter_title">Speed meter</string>
 </resources>

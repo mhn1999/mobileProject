@@ -6,6 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import android.telephony.*
 import android.content.Context
 import android.content.pm.PackageManager
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModel
 
@@ -25,4 +27,8 @@ class LTECellViewModel(private val context: TelephonyManager) : ViewModel() {
                 _lteCellInfo.value = cellInfoList
 //            }
         }
+    @RequiresApi(Build.VERSION_CODES.Q)
+    fun fetchSignalStrenght(): CellSignalStrength? {
+        return context.signalStrength?.cellSignalStrengths?.first()
+    }
     }
