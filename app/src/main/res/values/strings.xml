@@ -11,4 +11,6 @@
     <string name="advanced_settings_Button">Advanced Settings</string>
     <string name="how_to_use_Button">How To Use</string>
     <string name="speed_meter_title">Speed meter</string>
+    <string name="sim1_info">Sim1 info</string>
+    <string name="sim2_info">Sim2 info</string>
 </resources>

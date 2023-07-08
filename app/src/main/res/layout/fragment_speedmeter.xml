@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/acivity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+<LinearLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.notifications.SpeedmeterFragment" >
     <!-- list_item_cell_info.xml -->
+    <TextView
+        android:id="@+id/TextSim1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sim1_info"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.farimarwat.supergaugeview.SuperGaugeView
         android:id="@+id/speedMeterSim1"
         android:layout_width="wrap_content"
@@ -14,12 +32,21 @@
         app:duration="500"
         app:gaugeText="Upload Speed"
         app:gaugeTextColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@id/TextSim2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/speedMeterSim2"
+        app:layout_constraintTop_toBottomOf="@id/TextSim1"
         app:progressBackground="gauge_keyhole_14" />
 
+    <TextView
+        android:id="@+id/TextSim2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sim2_info"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/speedMeterSim1" />
     <com.farimarwat.supergaugeview.SuperGaugeView
         android:id="@+id/speedMeterSim2"
         android:layout_width="wrap_content"
@@ -29,8 +56,10 @@
         app:gaugeTextColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/speedMeterSim1"
+        app:layout_constraintTop_toBottomOf="@id/TextSim2"
         app:progressBackground="gauge_keyhole_14" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
+</ScrollView>

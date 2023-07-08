@@ -31,6 +31,7 @@ class SpeedmeterFragment : Fragment() {
   // onDestroyView.
   private val binding get() = _binding!!
 
+  @RequiresApi(Build.VERSION_CODES.Q)
   override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,
@@ -43,51 +44,74 @@ class SpeedmeterFragment : Fragment() {
 
     _binding = FragmentSpeedmeterBinding.inflate(inflater, container, false)
     val root: View = binding.root
-      binding.speedMeterSim1.prepareGauge(requireContext())
-      binding.speedMeterSim1.addGaugeListener(object : SuperGaugeView.GaugeListener{
-          override fun onProgress(progress: Float) {
-          }
 
-          @RequiresApi(Build.VERSION_CODES.Q)
-          override fun onGaugePrepared(prepared: Boolean) {
-              if(prepared){
-                  CoroutineScope(Dispatchers.Main).launch {
-                      while(true){
-                          delay(1000)
-                          val progress = GetSpeedValue()
-                          if (progress != null) {
-                              binding.speedMeterSim1.setProgress(progress.dbm.toFloat()+(196..204).random())
-                              binding.speedMeterSim1.setGaugeText(progress.dbm.toString() + " dbm")
+
+      viewModel.fetchSignalStrenght()
+      var progress = viewModel.registeredCellInfo
+      if(progress.value!!.size >= 1) {
+          binding.speedMeterSim2.setEnabled(false)
+          binding.speedMeterSim1.prepareGauge(requireContext())
+          binding.speedMeterSim1.addGaugeListener(object : SuperGaugeView.GaugeListener {
+              override fun onProgress(progress: Float) {
+              }
+
+              @RequiresApi(Build.VERSION_CODES.R)
+              override fun onGaugePrepared(prepared: Boolean) {
+                  if (prepared) {
+                      CoroutineScope(Dispatchers.Main).launch {
+                          while (true) {
+                              viewModel.fetchSignalStrenght()
+                              delay(1000)
+                              progress = viewModel.registeredCellInfo
+                              val dbmLevel =
+                                  progress.value?.get(0)?.cellSignalStrength?.dbm!!.toFloat()
+                              binding.speedMeterSim1.setProgress(dbmLevel + (196..204).random())
+                              binding.speedMeterSim1.setGaugeText(dbmLevel.toString() + " dbm")
+
                           }
                       }
+
                   }
               }
-          }
 
-      })
+          })
+      }
+      if(progress.value!!.size == 2) {
+        binding.speedMeterSim2.setEnabled(true)
+          binding.speedMeterSim2.prepareGauge(requireContext())
+          binding.speedMeterSim2.addGaugeListener(object : SuperGaugeView.GaugeListener {
+              override fun onProgress(progress: Float) {
+              }
+
+              @RequiresApi(Build.VERSION_CODES.R)
+              override fun onGaugePrepared(prepared: Boolean) {
+                  if (prepared) {
+                      CoroutineScope(Dispatchers.Main).launch {
+                          while (true) {
+                              viewModel.fetchSignalStrenght()
+                              delay(1000)
+                              progress = viewModel.registeredCellInfo
+                              val dbmLevel =
+                                  progress.value?.get(1)?.cellSignalStrength?.dbm!!.toFloat()
+                              binding.speedMeterSim2.setProgress(dbmLevel + (196..204).random())
+                              binding.speedMeterSim2.setGaugeText(dbmLevel.toString() + " dbm")
+
+                          }
+                      }
+
+                  }
+              }
+
+          })
+      }
+
       adapter = LTECellAdapter(requireContext().getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager)
       return root
   }
-    @RequiresApi(Build.VERSION_CODES.Q)
-    fun GetSpeedValue(): CellSignalStrength? {
-        viewModel.fetchLTECellInfo()
-        val regSimInfo = viewModel.fetchSignalStrenght()
-        return regSimInfo
-    }
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-        // Observe the LTE cell info from the ViewModel
-        viewModel.lteCellInfo.observe(viewLifecycleOwner) { cellList ->
-            // Update the adapter with the new list of LTE cells
-            adapter.setLTECellList(cellList)
-        }
-        // Fetch the LTE cell info
-        viewModel.fetchLTECellInfo()
-    }
 
-override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+//override fun onDestroyView() {
+//        super.onDestroyView()
+//        _binding = null
+//    }
 }
