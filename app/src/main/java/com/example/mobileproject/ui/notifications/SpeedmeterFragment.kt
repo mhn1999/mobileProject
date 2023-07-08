@@ -42,8 +42,8 @@ class SpeedmeterFragment : Fragment() {
           ViewModelFactory(requireContext().getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager)
       ).get(LTECellViewModel::class.java)
 
-    _binding = FragmentSpeedmeterBinding.inflate(inflater, container, false)
-    val root: View = binding.root
+      _binding = FragmentSpeedmeterBinding.inflate(inflater, container, false)
+      val root: View = binding.root
 
 
       viewModel.fetchSignalStrenght()
