@@ -32,21 +32,43 @@ class LTECellAdapter(private val telephonyManager: TelephonyManager) : RecyclerV
     override fun onBindViewHolder(holder: LTECellViewHolder, position: Int) {
         val lteCell = lteCellList[position]
         // Bind the LTE cell info to the views in the ViewHolder
-        holder.cellInfoTextView.text = lteCell.toString()
-//        holder.cellInfoButton.setOnClickListener {
-//        val flag =telephonyManager.setNetworkSelectionModeManual(lteCell.cellIdentity.toString(),false)
-//            if (flag==true)
-//            {
-//                holder.cellInfoButton.text="shit"
-//            }
-//        }
+        holder.cellInfoTextView.text = lteCell.cellIdentity.operatorAlphaLong
+        holder.cellInfoTextView1.text = lteCell.cellIdentity.toString()
+        holder.cellInfoTextView2.text = lteCell.cellSignalStrength.toString()
+        holder.cellInfoButton.setOnClickListener {
+            setPreferredNetworkType()
+        }
 
+    }
+    private fun setPreferredNetworkType() { //this is a fun u used to set network type in the past
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            // For API level 29 and above, use setPreferredNetworkType() directly
+            //telephonyManager.setPreferredNetworkType(TelephonyManager.NETWORK_TYPE_LTE)
+        } else {
+            // For API level below 29, use reflection to access the hidden method
+            try {
+                val setPreferredNetworkTypeMethod =
+                    telephonyManager.javaClass.getDeclaredMethod(
+                        "setPreferredNetworkType",
+                        Integer.TYPE
+                    )
+                setPreferredNetworkTypeMethod.invoke(
+                    telephonyManager,
+                    TelephonyManager.NETWORK_TYPE_LTE
+                )
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
     override fun getItemCount(): Int = lteCellList.size
 
     inner class LTECellViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val cellInfoTextView: TextView = itemView.findViewById(R.id.cellInfoTextView)
+        val cellInfoTextView1: TextView = itemView.findViewById(R.id.cellInfoTextView1)
+        val cellInfoTextView2: TextView = itemView.findViewById(R.id.cellInfoTextView2)
         val cellInfoButton: Button = itemView.findViewById(R.id.cellInfoButton)
     }
 }

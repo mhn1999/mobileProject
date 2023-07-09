@@ -7,28 +7,53 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="8dp"
+    android:layout_margin="10dp"
+    android:background="@drawable/cell_background"
     tools:context=".ui.cells.LTECellFragment" >
 
     <TextView
         android:id="@+id/cellInfoTextView"
-        android:layout_width="0dp"
+        android:layout_width="270dp"
         android:layout_height="wrap_content"
         android:text="example"
         android:textColor="@color/text_color"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/cellInfoButton"
+        app:layout_constraintEnd_toStartOf="@id/cellInfoButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/cellInfoTextView1"
+        android:layout_width="270dp"
+        android:layout_height="wrap_content"
+        android:text="example"
+        android:textColor="@color/text_color"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/cellInfoButton"
+        app:layout_constraintTop_toBottomOf="@id/cellInfoTextView" />
+
+    <TextView
+        android:id="@+id/cellInfoTextView2"
+        android:layout_width="270dp"
+        android:layout_height="wrap_content"
+        android:text="example"
+        android:textColor="@color/text_color"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/cellInfoButton"
+        app:layout_constraintTop_toBottomOf="@id/cellInfoTextView1" />
+
     <Button
         android:id="@+id/cellInfoButton"
-        android:layout_width="63dp"
+        android:layout_width="0dp"
         android:layout_height="70dp"
         android:text="@string/connect"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/cellInfoButton"
+
         app:layout_constraintTop_toTopOf="parent" />
 
 

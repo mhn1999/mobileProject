@@ -12,6 +12,9 @@ import com.example.mobileproject.R
 import com.example.mobileproject.databinding.FragmentHomeBinding
 import android.content.Intent
 import android.provider.Settings
+import androidx.appcompat.view.menu.MenuView.ItemView
+import com.example.mobileproject.HowToUseAct
+import kotlinx.coroutines.NonDisposableHandle.parent
 
 class HomeFragment : Fragment() {
 
@@ -34,7 +37,6 @@ private var _binding: FragmentHomeBinding? = null
       val advancedSettingsButton :Button = binding.AdvancedSettingButton
       val HowToUseButton :Button = binding.HowToUseButton
       var toggle = true
-
       // What happens when the
       // TextView in clicked/tapped
       titleView.setOnClickListener {
@@ -42,24 +44,29 @@ private var _binding: FragmentHomeBinding? = null
           // If toggle is true, then text will become
           // white and background will become green
           // Else text is green and background is white
-          if(toggle){
+          if (toggle) {
               titleView.setTextAppearance(R.style.whiteText)
               titleView.setBackgroundResource(R.color.purple_200)
           } else {
               titleView.setTextAppearance(R.style.gfgGreenText)
               titleView.setBackgroundResource(R.color.white)
           }
+          toggle = !toggle
+      }
           advancedSettingsButton.setOnClickListener{
-              val intent = Intent(Settings.ACTION_NETWORK_OPERATOR_SETTINGS)//Global.NETWORK_PREFERENCE)//ACTION_DEVICE_INFO_SETTINGS
+              val intent = Intent(Settings.ACTION_DEVICE_INFO_SETTINGS)//Settings.ACTION_NETWORK_OPERATOR_SETTINGS)//Global.NETWORK_PREFERENCE)//ACTION_DEVICE_INFO_SETTINGS
               startActivity(intent)
           }
+      HowToUseButton.setOnClickListener {
+          val intent = Intent(context, HowToUseAct::class.java)
+          startActivity(intent)
+      }
 
           // Logically inversing the toggle, i.e. if toggle
           // is true then it shall become false
           // And vice-versa to keep the styles
           // keep changing on every click/tap
-          toggle = !toggle
-      }
+
 
 //    homeViewModel.text.observe(viewLifecycleOwner) {
 //        titleView.text = it
